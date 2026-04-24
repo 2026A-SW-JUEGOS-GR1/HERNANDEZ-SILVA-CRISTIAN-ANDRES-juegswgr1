@@ -1,0 +1,36 @@
+{
+    "activeFile": "mapa.json",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "mapa.json": {
+            "scale": 0.4104296875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 639.5736175882745,
+                "y": 288.7218045112782
+            }
+        },
+        "mapa.json#Creacion": {
+            "scaleInDock": 0.33
+        }
+    },
+    "last.imagePath": "C:/Users/Lenovo/Downloads/kenney_new-platformer-pack-1.1/Spritesheets",
+    "map.height": 9,
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 64,
+    "map.tileWidth": 64,
+    "map.width": 20,
+    "openFiles": [
+        "mapa.json"
+    ],
+    "project": "Creacion_de_proyecto.tiled-project",
+    "recentFiles": [
+        "mapa.json"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 64,
+        "width": 64
+    }
+}
