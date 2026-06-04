@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS LIFE - Phaser 3 RPG & Socio-Economic Ecosistema</title>
+    <!-- Google Fonts for futuristic Sci-Fi and clean body look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Phaser 3 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Banner -->
+        <header class="game-header">
+            <div class="logo-container">
+                <span class="logo-glitch" data-text="NEXUS LIFE">NEXUS LIFE</span>
+                <span class="badge">PROTOTIPO V1.0</span>
+            </div>
+            <div class="header-info">
+                <span>Taller Universitario - Ecosistema Social-Económico</span>
+            </div>
+        </header>
+
+        <!-- Main Layout Split -->
+        <main class="main-content">
+            <!-- Left Side: Phaser Game Canvas Container -->
+            <section class="game-viewport-container">
+                <div class="neon-border-wrapper">
+                    <div id="game-container"></div>
+                </div>
+            </section>
+
+            <!-- Right Side: Interactive Developer Console & Info -->
+            <aside class="sidebar-panel">
+                <div class="panel-section">
+                    <h3><i class="icon">🎮</i> CONTROLES GENERALES</h3>
+                    <ul class="info-list">
+                        <li><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> o <span class="key">↑</span><span class="key">←</span><span class="key">↓</span><span class="key">→</span> : Movimiento (En nivel)</li>
+                        <li><span class="key">Clic</span> : Interacciones en los botones del Menú</li>
+                        <li><span class="key">ESC</span> : Volver al Menú Principal</li>
+                    </ul>
+                </div>
+
+                <div class="panel-section">
+                    <h3><i class="icon">🔬</i> CONSOLA DE PRUEBAS HUD</h3>
+                    <p class="description">Prueba la reactividad de la escena de interfaz (UIScene) usando estos disparadores directos de eventos:</p>
+                    <div class="btn-grid">
+                        <button id="btn-add-score" class="dev-btn add-score-btn">
+                            <span class="btn-icon">+</span> Sumar +10 Puntos
+                        </button>
+                        <button id="btn-sub-life" class="dev-btn lose-life-btn">
+                            <span class="btn-icon">♥</span> Restar -1 Vida
+                        </button>
+                        <button id="btn-add-timer" class="dev-btn add-timer-btn">
+                            <span class="btn-icon">⏱</span> Añadir +30s
+                        </button>
+                        <button id="btn-reset-hud" class="dev-btn reset-btn">
+                            Reiniciar HUD
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-section arc-details">
+                    <h3><i class="icon">🛠</i> ARQUITECTURA DE ESCENAS</h3>
+                    <div class="scene-node-list">
+                        <div class="scene-node active">Boot / Preloader <span class="status-dot green"></span></div>
+                        <div class="scene-node active">Menú Principal <span class="status-dot green"></span></div>
+                        <div class="scene-node">Nivel 1: Comercial <span class="status-dot yellow"></span></div>
+                        <div class="scene-node">Nivel 2: Social <span class="status-dot yellow"></span></div>
+                        <div class="scene-node">UI HUD (Overlay) <span class="status-dot blue"></span></div>
+                    </div>
+                    <div class="architecture-note">
+                        Físicas configuradas en <strong>Arcade 2D</strong>.
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Footer Info -->
+        <footer class="game-footer">
+            <p>Desarrollado para el Taller de Videojuegos 2D - Politécnica EPN - 2026</p>
+        </footer>
+    </div>
+
+    <!-- Load main game config entry script -->
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>
