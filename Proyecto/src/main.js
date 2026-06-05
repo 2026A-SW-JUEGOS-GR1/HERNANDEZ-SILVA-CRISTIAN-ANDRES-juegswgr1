@@ -13,8 +13,8 @@ import UIScene from './scenes/UIScene.js';
 // Configuración general de Phaser
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 500,
+    width: 1280,
+    height: 800,
     parent: 'game-container',
     physics: {
         default: 'arcade',
@@ -85,6 +85,84 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('[Dev Console] Emitiendo dev-reset-hud');
             game.events.emit('dev-reset-hud');
         });
+    }
+
+    // =========================================================
+    // BOTÓN MUTE - Silenciar / Activar música del juego
+    // Usa el flag global de Phaser `game.sound.mute` para
+    // silenciar TODA la reproducción (música + SFX) en un click.
+    // =========================================================
+    const btnMute = document.getElementById('btn-mute');
+    if (btnMute) {
+        btnMute.addEventListener('click', () => {
+            game.sound.mute = !game.sound.mute;
+            const muted = game.sound.mute;
+            btnMute.textContent = muted ? '🔇' : '🔊';
+            btnMute.classList.toggle('muted', muted);
+            btnMute.setAttribute('aria-pressed', muted ? 'true' : 'false');
+            btnMute.title = muted ? 'Activar sonido' : 'Silenciar sonido';
+            console.log(`[Audio] Sonido ${muted ? 'silenciado' : 'activado'}.`);
+        });
+    }
+
+    // =========================================================
+    // BOTÓN FULLSCREEN - Alternar pantalla completa
+    // Usa la Fullscreen API sobre el contenedor del juego
+    // (`.neon-border-wrapper`) para que SOLO la pantalla del
+    // juego se expanda, sin perder la estética de la página.
+    // El CSS `.neon-border-wrapper:fullscreen` se encarga de
+    // quitar el aspect-ratio y rellenar todo el viewport.
+    // =========================================================
+    const btnFullscreen = document.getElementById('btn-fullscreen');
+    const fullscreenTarget = document.querySelector('.neon-border-wrapper');
+
+    const getFullscreenElement = () =>
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement ||
+        null;
+
+    const requestFullscreen = (el) => {
+        const fn = el.requestFullscreen ||
+                   el.webkitRequestFullscreen ||
+                   el.mozRequestFullScreen ||
+                   el.msRequestFullscreen;
+        if (fn) return fn.call(el);
+        return Promise.reject(new Error('Fullscreen API no soportada'));
+    };
+
+    const exitFullscreen = () => {
+        const fn = document.exitFullscreen ||
+                   document.webkitExitFullscreen ||
+                   document.mozCancelFullScreen ||
+                   document.msExitFullscreen;
+        if (fn) return fn.call(document);
+        return Promise.reject(new Error('Fullscreen API no soportada'));
+    };
+
+    const updateFullscreenButton = () => {
+        if (!btnFullscreen) return;
+        const isFs = !!getFullscreenElement();
+        btnFullscreen.textContent = isFs ? '⤡' : '⛶';
+        btnFullscreen.classList.toggle('active', isFs);
+        btnFullscreen.setAttribute('aria-pressed', isFs ? 'true' : 'false');
+        btnFullscreen.title = isFs ? 'Salir de pantalla completa' : 'Pantalla completa';
+    };
+
+    if (btnFullscreen && fullscreenTarget) {
+        btnFullscreen.addEventListener('click', () => {
+            if (getFullscreenElement()) {
+                exitFullscreen().catch(err => console.warn('[Fullscreen] No se pudo salir:', err));
+            } else {
+                requestFullscreen(fullscreenTarget)
+                    .catch(err => console.warn('[Fullscreen] No se pudo entrar:', err));
+            }
+        });
+
+        // Sincronizar el botón si el usuario sale con ESC o atajo del navegador.
+        ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange']
+            .forEach(evt => document.addEventListener(evt, updateFullscreenButton));
     }
 });
 

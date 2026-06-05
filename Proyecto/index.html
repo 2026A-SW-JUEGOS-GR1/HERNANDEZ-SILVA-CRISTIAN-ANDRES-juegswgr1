@@ -26,29 +26,38 @@
             </div>
         </header>
 
+        <!-- Top Bar: Controles del Juego -->
+        <section class="controls-bar" aria-label="Controles del juego">
+            <h3><i class="icon">🎮</i> CONTROLES</h3>
+            <ul class="controls-list">
+                <li><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> o <span class="key">↑</span><span class="key">←</span><span class="key">↓</span><span class="key">→</span> Mover</li>
+                <li><span class="key">ESPACIO</span> Saltar (Doble en L2)</li>
+                <li><span class="key">SHIFT</span> Dash (L2)</li>
+                <li><span class="key">E</span> Interactuar / Socializar / Comprar</li>
+                <li><span class="key">1</span>–<span class="key">5</span> Comprar (L1)</li>
+                <li><span class="key">ESC</span> Pausa · <span class="key">Q</span> Menú</li>
+            </ul>
+        </section>
+
         <!-- Main Layout Split -->
         <main class="main-content">
             <!-- Left Side: Phaser Game Canvas Container -->
             <section class="game-viewport-container">
                 <div class="neon-border-wrapper">
                     <div id="game-container"></div>
+                    <!-- Botón para alternar pantalla completa sobre la pantalla del juego -->
+                    <button id="btn-fullscreen" class="game-screen-btn fullscreen-btn" type="button" title="Pantalla completa" aria-pressed="false" aria-label="Activar o desactivar pantalla completa">
+                        ⛶
+                    </button>
+                    <!-- Botón para silenciar / activar la música sobre la pantalla del juego -->
+                    <button id="btn-mute" class="game-screen-btn mute-btn" type="button" title="Silenciar sonido" aria-pressed="false" aria-label="Silenciar o activar la música del juego">
+                        🔊
+                    </button>
                 </div>
             </section>
 
             <!-- Right Side: Interactive Developer Console & Info -->
             <aside class="sidebar-panel">
-                <div class="panel-section">
-                    <h3><i class="icon">🎮</i> CONTROLES GENERALES</h3>
-                    <ul class="info-list">
-                        <li><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> o <span class="key">↑</span><span class="key">←</span><span class="key">↓</span><span class="key">→</span> : Movimiento (En nivel)</li>
-                        <li><span class="key">ESPACIO</span> : Saltar (Doble salto en L2)</li>
-                        <li><span class="key">SHIFT</span> : Dash (Sólo Nivel Social)</li>
-                        <li><span class="key">E</span> : Interactuar / Socializar / Comprar</li>
-                        <li><span class="key">1</span>–<span class="key">5</span> : Comprar ítem en tienda (L1)</li>
-                        <li><span class="key">ESC</span> : Pausa · <span class="key">Q</span> : Salir al Menú</li>
-                    </ul>
-                </div>
-
                 <div class="panel-section">
                     <h3><i class="icon">🔬</i> CONSOLA DE PRUEBAS HUD</h3>
                     <p class="description">Prueba la reactividad de la escena de interfaz (UIScene) usando estos disparadores directos de eventos del ecosistema NEXUS:</p>
