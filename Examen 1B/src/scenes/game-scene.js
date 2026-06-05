@@ -8,11 +8,11 @@ import { CUSTOM_EVENTS, EventBusComponent } from '../components/events/event-bus
 import { EnemyDestroyedComponent } from '../components/spawners/enemy-destroyed-component.js';
 import { Score } from '../objects/ui/score.js';
 import { Lives } from '../objects/ui/lives.js';
-import { GameOverScreen } from '../objects/ui/game-over-screen.js';
 import { AudioManager } from '../objects/audio-manager.js';
 import { SoundButton } from '../objects/ui/sound-button.js';
 
 const PAUSE_SCENE_KEY = 'PauseScene';
+const GAME_OVER_SCENE_KEY = 'GameOverScene';
 
 /**
  * Core Phaser 3 Scene that has the actual game play of our Space Shooter Game.
@@ -145,7 +145,6 @@ export class GameScene extends Phaser.Scene {
     new Score(this, eventBusComponent);
     new Lives(this, eventBusComponent);
     this.#soundButton = new SoundButton(this);
-    new GameOverScreen(this, eventBusComponent);
 
     // audio
     new AudioManager(this, eventBusComponent);
@@ -158,10 +157,26 @@ export class GameScene extends Phaser.Scene {
     this.#muteKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
     this.#muteKey.on('down', this.#handleMuteShortcut, this);
 
+    // game over overlay
+    eventBusComponent.on(CUSTOM_EVENTS.GAME_OVER, this.#showGameOver, this);
+
     this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.#pauseKey.off('down', this.#togglePause, this);
       this.#muteKey.off('down', this.#handleMuteShortcut, this);
     });
+  }
+
+  /**
+   * Launches the GameOverScene overlay and pauses the game so the player can
+   * click the restart button without the game still processing input.
+   * @returns {void}
+   */
+  #showGameOver() {
+    if (this.scene.isActive(GAME_OVER_SCENE_KEY)) {
+      return;
+    }
+    this.scene.launch(GAME_OVER_SCENE_KEY);
+    this.scene.pause();
   }
 
   /**

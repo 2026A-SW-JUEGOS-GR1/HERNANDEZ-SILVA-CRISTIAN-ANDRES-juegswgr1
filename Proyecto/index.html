@@ -41,20 +41,26 @@
                     <h3><i class="icon">🎮</i> CONTROLES GENERALES</h3>
                     <ul class="info-list">
                         <li><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> o <span class="key">↑</span><span class="key">←</span><span class="key">↓</span><span class="key">→</span> : Movimiento (En nivel)</li>
-                        <li><span class="key">Clic</span> : Interacciones en los botones del Menú</li>
-                        <li><span class="key">ESC</span> : Volver al Menú Principal</li>
+                        <li><span class="key">ESPACIO</span> : Saltar (Doble salto en L2)</li>
+                        <li><span class="key">SHIFT</span> : Dash (Sólo Nivel Social)</li>
+                        <li><span class="key">E</span> : Interactuar / Socializar / Comprar</li>
+                        <li><span class="key">1</span>–<span class="key">5</span> : Comprar ítem en tienda (L1)</li>
+                        <li><span class="key">ESC</span> : Pausa · <span class="key">Q</span> : Salir al Menú</li>
                     </ul>
                 </div>
 
                 <div class="panel-section">
                     <h3><i class="icon">🔬</i> CONSOLA DE PRUEBAS HUD</h3>
-                    <p class="description">Prueba la reactividad de la escena de interfaz (UIScene) usando estos disparadores directos de eventos:</p>
+                    <p class="description">Prueba la reactividad de la escena de interfaz (UIScene) usando estos disparadores directos de eventos del ecosistema NEXUS:</p>
                     <div class="btn-grid">
-                        <button id="btn-add-score" class="dev-btn add-score-btn">
-                            <span class="btn-icon">+</span> Sumar +10 Puntos
+                        <button id="btn-add-tohol" class="dev-btn add-tohol-btn">
+                            <span class="btn-icon">$</span> Sumar +25 TOHOL
                         </button>
-                        <button id="btn-sub-life" class="dev-btn lose-life-btn">
-                            <span class="btn-icon">♥</span> Restar -1 Vida
+                        <button id="btn-sub-energy" class="dev-btn lose-energy-btn">
+                            <span class="btn-icon">⚡</span> Restar -1 Energía
+                        </button>
+                        <button id="btn-add-rep" class="dev-btn add-rep-btn">
+                            <span class="btn-icon">★</span> Sumar +5 Reputación
                         </button>
                         <button id="btn-add-timer" class="dev-btn add-timer-btn">
                             <span class="btn-icon">⏱</span> Añadir +30s
@@ -70,12 +76,12 @@
                     <div class="scene-node-list">
                         <div class="scene-node active">Boot / Preloader <span class="status-dot green"></span></div>
                         <div class="scene-node active">Menú Principal <span class="status-dot green"></span></div>
-                        <div class="scene-node">Nivel 1: Comercial <span class="status-dot yellow"></span></div>
-                        <div class="scene-node">Nivel 2: Social <span class="status-dot yellow"></span></div>
-                        <div class="scene-node">UI HUD (Overlay) <span class="status-dot blue"></span></div>
+                        <div class="scene-node active">L1: Distrito Financiero <span class="status-dot green"></span></div>
+                        <div class="scene-node active">L2: Distrito Social <span class="status-dot green"></span></div>
+                        <div class="scene-node active">UI HUD (Overlay) <span class="status-dot green"></span></div>
                     </div>
                     <div class="architecture-note">
-                        Físicas configuradas en <strong>Arcade 2D</strong>.
+                        Físicas <strong>Arcade 2D</strong> · 2 personajes · 2 distritos · ecosistema NEXUS.
                     </div>
                 </div>
             </aside>

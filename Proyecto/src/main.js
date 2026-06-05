@@ -46,38 +46,74 @@ const game = new Phaser.Game(config);
 // Integración de la Consola de Pruebas HUD Externa
 // Esto permite que los botones del panel lateral HTML interactúen con UIScene a través de eventos globales de Phaser.
 document.addEventListener('DOMContentLoaded', () => {
-    const btnAddScore = document.getElementById('btn-add-score');
-    const btnSubLife = document.getElementById('btn-sub-life');
-    const btnAddTimer = document.getElementById('btn-add-timer');
-    const btnResetHud = document.getElementById('btn-reset-hud');
+    const btnAddTohol   = document.getElementById('btn-add-tohol');
+    const btnSubEnergy  = document.getElementById('btn-sub-energy');
+    const btnAddRep     = document.getElementById('btn-add-rep');
+    const btnAddTimer   = document.getElementById('btn-add-timer');
+    const btnResetHud   = document.getElementById('btn-reset-hud');
 
-    if (btnAddScore) {
-        btnAddScore.addEventListener('click', () => {
-            console.log('[Dev Console] Emitiendo add-score (+10)');
-            game.events.emit('dev-add-score', 10);
+    if (btnAddTohol) {
+        btnAddTohol.addEventListener('click', () => {
+            console.log('[Dev Console] Emitiendo dev-add-tohol (+25)');
+            game.events.emit('dev-add-tohol', 25);
         });
     }
 
-    if (btnSubLife) {
-        btnSubLife.addEventListener('click', () => {
-            console.log('[Dev Console] Emitiendo sub-life (-1)');
-            game.events.emit('dev-sub-life', 1);
+    if (btnSubEnergy) {
+        btnSubEnergy.addEventListener('click', () => {
+            console.log('[Dev Console] Emitiendo dev-sub-energy (-1)');
+            game.events.emit('dev-sub-energy', 1);
+        });
+    }
+
+    if (btnAddRep) {
+        btnAddRep.addEventListener('click', () => {
+            console.log('[Dev Console] Emitiendo dev-add-rep (+5)');
+            game.events.emit('dev-add-rep', 5);
         });
     }
 
     if (btnAddTimer) {
         btnAddTimer.addEventListener('click', () => {
-            console.log('[Dev Console] Emitiendo add-timer (+30s)');
+            console.log('[Dev Console] Emitiendo dev-add-timer (+30s)');
             game.events.emit('dev-add-timer', 30);
         });
     }
 
     if (btnResetHud) {
         btnResetHud.addEventListener('click', () => {
-            console.log('[Dev Console] Emitiendo reset-hud');
+            console.log('[Dev Console] Emitiendo dev-reset-hud');
             game.events.emit('dev-reset-hud');
         });
     }
+});
+
+// =========================================================
+// DESBLOQUEO DE AUDIO (política de autoplay de los navegadores)
+// Los navegadores modernos bloquean AudioContext hasta que el usuario
+// realiza una primera interacción (clic, tecla, toque). Llamamos a
+// `game.sound.unlock()` en el primer evento de input para que las
+// escenas puedan reproducir música y SFX.
+// =========================================================
+const unlockAudio = () => {
+    if (window.__nexusAudioUnlocked) return;
+    window.__nexusAudioUnlocked = true;
+    try {
+        if (game.sound && typeof game.sound.unlock === 'function') {
+            game.sound.unlock();
+        }
+        if (game.sound && game.sound.context && game.sound.context.state === 'suspended') {
+            game.sound.context.resume();
+        }
+        // Avisamos a las escenas para que reinicien la música si ya estaba sonando.
+        game.events.emit('audio-unlocked');
+        console.log('[Audio] Contexto desbloqueado por interacción del usuario.');
+    } catch (e) {
+        console.warn('[Audio] No se pudo desbloquear el contexto:', e);
+    }
+};
+['pointerdown', 'keydown', 'touchstart'].forEach(evt => {
+    window.addEventListener(evt, unlockAudio, { once: false });
 });
 
 export default game;

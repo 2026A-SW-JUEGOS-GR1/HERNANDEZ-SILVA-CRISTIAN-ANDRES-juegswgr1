@@ -29,7 +29,7 @@ export class SoundButton extends Phaser.GameObjects.Container {
       .rectangle(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT, 0x000000, 0.55)
       .setStrokeStyle(1, 0xb2405e);
     this.#label = scene.add
-      .text(0, 0, 'SOUND ON', {
+      .text(0, 0, 'SONIDO ON', {
         fontSize: '12px',
         color: '#ffffff',
         fontStyle: 'bold',
@@ -66,7 +66,7 @@ export class SoundButton extends Phaser.GameObjects.Container {
    * @returns {void}
    */
   #refreshLabel() {
-    this.#label.setText(this.#isMuted ? 'SOUND OFF' : 'SOUND ON');
+    this.#label.setText(this.#isMuted ? 'SONIDO OFF' : 'SONIDO ON');
     this.#updateBackground();
   }
 

@@ -1,0 +1,28 @@
+Introducción
+En nuestro taller anterior, definimos la identidad, narrativa y estructura de nuestro juego. Ahora es el momento de traducir esas ideas en mecánicas interactivas y estructurar el flujo técnico del proyecto.
+Actualmente, nuestro prototipo en Phaser tiene una base funcional: el personaje sabe saltar. El objetivo de este taller es expandir el Game Loop y definir las reglas físicas y lógicas que harán que su juego sea divertido y desafiante, utilizando el motor de físicas de Phaser y mapas diseñados en Tiled.
+1. Diseño de Mecánicas de Juego
+Una mecánica de juego es cualquier acción que el jugador puede realizar o cualquier sistema con el que puede interactuar. Como equipo, deberán diseñar e implementar al menos 6 mecánicas en total (3 por cada escenario).
+Ejemplos de mecánicas en Plataformeros 2D (Aprovechando Phaser):
+Ustedes son libres de elegir qué mecánicas usar según la temática de su juego. Aquí hay algunas ideas de cómo los conceptos se traducen en el motor:
+Doble Salto / Salto en Pared (Wall Jump): Manipulación de la velocidad en el eje Y (setVelocityY) y detección de colisiones laterales.
+Dash (Impulso): Aplicar una alta velocidad horizontal por un tiempo muy corto, ignorando la gravedad momentáneamente.
+Plataformas Móviles: Cuerpos cinemáticos (kinematic) en Phaser que siguen una ruta, sobre los cuales el personaje puede pararse mediante fricción.
+Coleccionables y Power-Ups: Uso de grupos (Physics.Arcade.Group) y detección de superposición (overlap) para destruir el objeto y otorgar habilidades o puntos.
+Zonas de Daño / Trampas: Áreas o tiles específicos que, al detectarse una colisión, aplican una penalización (restar vidas, reiniciar posición).
+Disparo o Lanzamiento de Proyectiles: Creación de objetos instanciados desde la posición del jugador con una velocidad definida.
+Temporizador (Time Attack): Uso de los eventos de tiempo de Phaser (time.addEvent) para crear estrés o condiciones de derrota.
+2. Requerimientos Estructurales del Proyecto
+El proyecto se desarrollará en grupos de 2 personas. Para asegurar un trabajo equitativo y la integración de los conocimientos del curso, la arquitectura del juego debe cumplir estrictamente con lo siguiente:
+A. Estructura de Escenarios y Personajes
+Cada estudiante del grupo es responsable de un nivel completo.
+2 Escenarios Independientes: Cada estudiante debe diseñar su propio mapa usando Tiled y exportarlo en formato JSON. En Phaser, deberán cargar los Tilemaps y configurar las capas de colisión correspondientes.
+2 Personajes Distintos: Cada estudiante debe integrar su propio personaje (sprite/spritesheet) en su respectivo escenario.
+Distribución de Mecánicas: El Estudiante A aplicará 3 mecánicas específicas en su Escenario 1. El Estudiante B aplicará otras 3 mecánicas distintas en su Escenario 2.
+B. Flujo de Navegación y UI (Escenas de Phaser)
+Su juego ya no será solo un nivel aislado. Debe comportarse como una aplicación completa utilizando el administrador de escenas (Scene Manager) de Phaser:
+Menú Principal: Una escena inicial que dé la bienvenida al jugador y permita elegir a qué escenario entrar (Nivel 1 o Nivel 2).
+Sistema de Puntuación (Score): Debe existir un marcador visible en pantalla (UI) que se actualice mediante la recolección de objetos, eliminación de enemigos o tiempo sobrevivido.
+Condición de Fin de Juego (Game Loop Completo): El juego debe tener una forma de terminar, ya sea ganando o perdiendo. Deben implementar al menos una de las siguientes opciones:
+Por Mecánica: Un sistema de vidas que al llegar a cero lance la pantalla de "Game Over", o un límite de tiempo que finalice el nivel.
+Por Interfaz: Un menú de pausa/salida dentro del nivel que permita al jugador finalizar la partida y regresar al Menú Principal.

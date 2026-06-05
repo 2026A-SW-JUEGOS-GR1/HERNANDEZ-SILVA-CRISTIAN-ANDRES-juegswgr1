@@ -1,10 +1,15 @@
-# NEXUS LIFE
+# NEXUS LIFE: Realidad Expandida
 
 **Ecosistema Social-Económico RPG** — Prototipo desarrollado en Phaser 3 para el Taller de Videojuegos 2D de la Escuela Politécnica Nacional (EPN), 2026.
 
 ## Descripción
 
-NEXUS LIFE es un videojuego de plataformas 2D con estética cyberpunk/neón donde el jugador explora dos escenarios (Comercial y Social) con mecánicas de parkour, combate aéreo, economía interna (moneda TOHOL), power-ups y un HUD interactivo. El proyecto funciona como prototipo educativo para demostrar físicas Arcade, sistemas de escenas, partículas, audio y UI superpuesta en Phaser 3.
+**NEXUS LIFE: Realidad Expandida** es un RPG/simulación 2D de estética cyberpunk donde el jugador construye su identidad social-económica dentro de una megaciudad llamada **NEXUS**. La partida se divide en dos distritos:
+
+- **Distrito Financiero (Nivel 1):** aceptar trabajos de reparto, ganar moneda **TOHOL** y gastar esa moneda en una tienda multi-ítem para adquirir una nueva vida (casa, vehículo, avatar premium, chip de velocidad, recarga de energía).
+- **Distrito Social (Nivel 2):** asistir a eventos nocturnos, socializar con anfitriones IA (NPCs), esquivar bots de seguridad mal configurados y acumular **Reputación** para acceder al evento principal.
+
+El HUD expone 4 stats en vivo (TOHOL · Energía · Reputación · Horario) y dos condiciones de victoria (≥100 TOHOL en L1, ≥50 REP en L2). La energía a 0 provoca una **Desconexión Forzada** (Game Over).
 
 ## Stack Tecnológico
 
@@ -22,165 +27,141 @@ Proyecto/
 ├── styles.css            # Estilos CSS con tema oscuro/neón
 ├── server.js             # Servidor HTTP local (Node.js, sin dependencias)
 ├── README.md             # Este archivo
+├── FLUJO_DEL_JUEGO.md    # Flujo de pantallas y arquitectura detallada
 ├── assets/
 │   ├── 1 Tiles/          # Tilesets industriales (platform_tile)
 │   ├── 2 Background/     # Capas de parallax (cielo, lejano, cercano, frontal)
 │   ├── 1 Biker/          # Spritesheets del Jugador 1 (Biker)
 │   ├── 2 Punk/           # Spritesheets del Jugador 2 (Punk)
-│   ├── 3 Cyborg/         # Spritesheets del enemigo (Cyborg)
-│   ├── 3 Objects/        # Objetos estáticos (cajas, barriles, vallas, etc.)
-│   ├── 4 Animated objects/ # Objetos animados (monedas, plataformas, transporters, etc.)
-│   ├── audio/            # (CARPETA PENDIENTE) Archivos de audio .mp3
-│   ├── maps/             # (CARPETA PENDIENTE) Mapas Tiled .json
-│   ├── GUIA_DE_ASSETS.md # Guía para añadir nuevos assets
-│   ├── license.txt       # Licencia de assets gratuitos de Craftpix
-│   └── license copy.txt  #
+│   ├── 3 Cyborg/         # Spritesheets de NPC ambient (Cyborg)
+│   ├── 3 Objects/        # Objetos estáticos
+│   ├── 4 Animated objects/
+│   ├── audio/            # (opcional) SFX y música
+│   ├── maps/             # (opcional) Mapas Tiled .json
+│   ├── GUIA_DE_ASSETS.md
+│   └── license.txt
 ├── src/
-│   ├── main.js           # Configuración de Phaser.Game e integración HTML
+│   ├── main.js           # Configuración de Phaser.Game e integración consola HTML
 │   └── scenes/
-│       ├── BootScene.js      # Precarga de assets + texturas procedurales (fallback)
-│       ├── MainMenuScene.js  # Menú principal con selección de niveles
-│       ├── Level1Scene.js    # Nivel 1: Escenario Comercial (parkour + combate)
-│       ├── Level2Scene.js    # Nivel 2: Escenario Social (dash + doble salto + NPC)
-│       └── UIScene.js        # HUD superpuesto (puntos, vidas, temporizador, game over/victoria)
+│       ├── BootScene.js       # Precarga + texturas procedurales (paquetes, glitches, iconos, vendor)
+│       ├── MainMenuScene.js   # Menú narrativo con tarjetas de ambos distritos
+│       ├── Level1Scene.js     # Distrito Financiero (entregas + tienda + glitches)
+│       ├── Level2Scene.js     # Distrito Social (parkour + eventos + bots)
+│       └── UIScene.js         # HUD TOHOL/Energía/Reputación/Horario
 ```
 
 ## Requisitos e Instalación
 
 ### Requisitos
-
-- **Node.js** (v12 o superior) — para el servidor HTTP local
-- **Navegador web moderno** (Chrome, Firefox, Edge) con soporte para ES Modules
+- **Node.js** (v12 o superior)
+- **Navegador web moderno** con soporte para ES Modules
 
 ### Instalación
-
-1. **Clonar o descargar** el repositorio.
-2. Abrir una terminal en la carpeta `Proyecto/`.
-3. **Iniciar el servidor:**
+1. Abrir terminal en la carpeta `Proyecto/`.
+2. Iniciar el servidor:
    ```bash
    node server.js
    ```
-4. **Abrir el navegador** en [http://localhost:3000](http://localhost:3000).
+3. Abrir navegador en [http://localhost:3000](http://localhost:3000).
 
 > **¿Por qué un servidor?**  
-> Phaser 3 necesita cargar imágenes locales (PNG, JSON) y los navegadores bloquean las solicitudes `file://` por CORS. El servidor `server.js` resuelve esto de forma liviana y sin dependencias npm.
-
-### Assets pendientes (opcionales)
-
-El juego funciona con texturas procedurales generadas en código como fallback. Para la experiencia completa:
-
-| Recurso | Ubicación | Estado |
-|---------|-----------|--------|
-| Sprites Biker/Punk/Cyborg | `assets/1 Biker/`, `assets/2 Punk/`, `assets/3 Cyborg/` | ✅ Incluidos |
-| Tiles industriales | `assets/1 Tiles/` | ✅ Incluidos |
-| Fondos parallax | `assets/2 Background/` | ✅ Incluidos |
-| Objetos animados/estáticos | `assets/3 Objects/`, `assets/4 Animated objects/` | ✅ Incluidos |
-| **Audio** (jump, coin, damage, music) | `assets/audio/` | ❄️ Pendiente |
-| **Mapas Tiled** | `assets/maps/` | ❄️ Pendiente (niveles procedurales activos) |
+> Phaser 3 carga imágenes locales (PNG, JSON) y los navegadores bloquean `file://` por CORS. `server.js` resuelve esto de forma liviana.
 
 ## Controles
 
 ### En los niveles
 | Tecla | Acción |
 |-------|--------|
-| `W` / `↑` / `SPACE` | Saltar / Doble salto (en el aire) |
-| `A` / `←` | Moverse a la izquierda |
-| `D` / `→` | Moverse a la derecha |
-| `S` / `↓` | (Sin uso actual) |
-| `SHIFT` | Dash (solo Nivel 2) |
-| `E` | Interactuar con NPC Vendedor (solo Nivel 2) |
-| `ESC` | Pausar/Reanudar |
-| `ENTER` | Reanudar (cuando está pausado) |
-| `Q` | Salir al menú principal (cuando está pausado) |
+| `W` / `↑` / `SPACE` | Saltar (doble salto en L2) |
+| `A` / `←` · `D` / `→` | Moverse |
+| `SHIFT` | Dash (Nivel 2) |
+| `E` | Interactuar / Socializar / Comprar |
+| `1`–`5` | Comprar ítem en tienda (Nivel 1) |
+| `ESC` | Pausa · `ENTER` Reanudar · `Q` Salir al menú |
 
 ### Consola de pruebas (panel lateral HTML)
 | Botón | Acción |
 |-------|--------|
-| `+ Sumar +10 Puntos` | Añade 10 puntos al score |
-| `♥ Restar -1 Vida` | Reduce 1 vida |
-| `⏱ Añadir +30s` | Añade 30 segundos al temporizador |
-| `Reiniciar HUD` | Resetea score, vidas y timer |
+| `+ Sumar +25 TOHOL` | Dispara `dev-add-tohol` |
+| `⚡ Restar -1 Energía` | Dispara `dev-sub-energy` |
+| `★ Sumar +5 Reputación` | Dispara `dev-add-rep` |
+| `⏱ Añadir +30s` | Dispara `dev-add-timer` |
+| `Reiniciar HUD` | Dispara `dev-reset-hud` |
 
 ## Arquitectura del Juego
 
 ### Sistema de Escenas (Phaser Scene Manager)
-
 ```
-BootScene (precarga + texturas procedurales)
-    ↓
-MainMenuScene (selección de nivel)
-    ↓
-┌───────────────────┐
-│ Level1Scene       │ ← lanza UIScene como overlay
-│   o               │
-│ Level2Scene       │
-└───────────────────┘
-        ↓
-  UIScene (HUD superpuesto, comunica vía game.events)
+BootScene
+   ↓
+MainMenuScene
+   ↓
+┌─────────────────────────┐
+│ Level1Scene (Financiero)│ ← lanza UIScene
+│   o                     │
+│ Level2Scene (Social)    │
+└─────────────────────────┘
+          ↓
+  UIScene (HUD overlay, comunica vía game.events)
 ```
 
-### Mecánicas implementadas
+### Mecánicas por nivel (cumple 3+ por escenario)
 
-| Mecánica | Nivel 1 (Comercial) | Nivel 2 (Social) |
-|----------|---------------------|-------------------|
-| Coyote Time (100ms) | ✅ | ✅ |
-| Jump Buffer (150ms) | ✅ | ✅ |
-| Doble salto | ✅ | ✅ |
-| Monedas TOHOL | ✅ (con partículas doradas) | ✅ (con partículas rosadas) |
-| Enemigos patrulla (IA) | ✅ (5 enemigos) | ✅ (6 enemigos) |
-| Combate aéreo | ✅ (destroy desde arriba) | ✅ |
-| Plataforma móvil | ✅ | ❌ |
-| Pinchos/trampas (hazard) | ✅ | ❌ |
-| Dash | ❌ | ✅ |
-| NPC Vendedor (power-up velocidad) | ❌ | ✅ |
-| Parallax scrolling (3 capas) | ✅ | ✅ |
-| Sistema de audio | ✅ (con fallback seguro) | ✅ |
-| Partículas JUICE | ✅ | ✅ |
-| Menú de pausa | ✅ | ✅ |
-| Time attack (60s) | ✅ | ✅ |
-| Victoria por portal o tiempo | ✅ | ✅ |
+**Nivel 1 — Distrito Financiero (Biker):**
+1. **Trabajos de entrega** — Recoger 5 paquetes y entregarlos a 4 clientes NPCs (`+50 TOHOL` cada uno).
+2. **Tienda multi-ítem** — 5 productos (Recarga Energía, Chip Velocidad, Avatar Premium, Vehículo, Casa) controlados con teclas `1`–`5`.
+3. **Glitches del sistema** — 5 zonas rojas parpadeantes que dañan al contacto (sustituyen los pinchos genéricos con justificación narrativa).
 
-### Comunicación entre escenas
+**Nivel 2 — Distrito Social (Punk):**
+4. **Parkour social** — Doble salto + Dash con rastro para acceder a terrazas y azoteas donde ocurren los eventos.
+5. **Eventos sociales** — 6 áreas temáticas con anfitriones IA y ciudadanos invitados; `E` para socializar y ganar `+10 REP` (con cooldown anti-farming).
+6. **Bots de seguridad mal configurados** — 3 bots patrulla con IA; daño lateral o desactivación saltando encima (`+5 REP`).
 
-Las escenas se comunican mediante el bus de eventos global de Phaser (`game.events`):
+### HUD (UIScene)
+- **TOHOL** (moneda del metaverso) — barra izquierda, dorada.
+- **ENERGÍA** — barra segmentada cyan → amarillo → rojo (3 cargas, 0 = Game Over).
+- **REPUTACIÓN** — barra central-derecha, verde (0–100).
+- **HORARIO** — countdown MM:SS, rosado (90s por defecto).
+- Banner inferior con modo activo: `DISTRITO SOCIAL · Reputación mínima: 50`.
 
-- **Nivel → HUD:** `add-score`, `lose-life`, `goal-reached`
-- **Consola HTML → HUD:** `dev-add-score`, `dev-sub-life`, `dev-add-timer`, `dev-reset-hud`
+### Condiciones de fin
+- **Victoria:** L1 → `goal-reached` con TOHOL ≥ 100. L2 → `goal-reached` con REP ≥ 50.
+- **Game Over:** Energía ≤ 0 (`DESCONEXIÓN FORZADA`) o tiempo agotado sin meta.
+- **Soft Fail:** Llegar al portal sin la cuota mínima (`CUOTA NO ALCANZADA` / `SIN INVITACIÓN AL EVENTO PRINCIPAL`).
+
+### Comunicación entre escenas (bus global `game.events`)
+- **Nivel → HUD:** `set-level-mode`, `add-tohol`, `change-energy`, `add-reputation`, `goal-reached`.
+- **Consola HTML → HUD:** `dev-add-tohol`, `dev-sub-energy`, `dev-add-rep`, `dev-add-timer`, `dev-reset-hud`.
 
 ### Texturas procedurales (fallback)
-
-`BootScene.createProceduralTextures()` genera texturas en tiempo de ejecución para:
-- Botones del menú (`btn_level1`, `btn_level2`)
-- Tileset de emergencia (`tileset_fallback`)
-- Plataforma móvil (`platform`)
-- Zonas de peligro (`hazard`)
-- NPC Vendedor (`npc`)
-- Portal de meta (`portal`)
-- Partículas (`particle_spark`)
-
-Si los assets reales están presentes, Phaser los usa en lugar de las texturas procedurales.
+`BootScene.createProceduralTextures()` genera en tiempo de ejecución:
+- `package` (caja marrón con cinta) — trabajos de L1.
+- `hazard` rojo con parpadeo — glitches del sistema.
+- `npc_citizen`, `npc_client`, `npc_host` — NPCs no hostiles.
+- `event_zone` rosa neón — áreas de eventos sociales.
+- `security_bot` con tinte rojo — bots de L2.
+- `icon_exclaim`, `icon_dollar`, `icon_star` — indicadores sobre NPCs.
+- `vendor` dorado / `vendor_cyan` — tienda y power-up.
+- `particle_spark` — chispas de partículas para pickups y double-jump.
 
 ### Audio
-
-El sistema de audio usa try/catch para evitar errores fatales si los archivos no existen. Los SFX se cargan en `BootScene` y se reproducen mediante `this.sound.play()` con verificación previa de existencia.
+Sistema con `try/catch` para evitar errores fatales. Los SFX (`sfx_jump`, `sfx_coin`, `sfx_damage`) se verifican antes de reproducirse. Si no existen, la acción se ejecuta en silencio (sin romper el flujo).
 
 ## Personalización y Desarrollo
 
 ### Añadir nuevos assets
-
-1. Colocar el archivo en la subcarpeta correspondiente de `assets/`.
-2. En `src/scenes/BootScene.js`, método `preload()`, agregar la línea de carga:
+1. Colocar archivo en la subcarpeta correspondiente de `assets/`.
+2. En `src/scenes/BootScene.js`, método `preload()`, agregar:
    ```js
    this.load.image('mi_clave', 'assets/ruta/al/archivo.png');
    // o this.load.spritesheet('clave', 'ruta', { frameWidth, frameHeight });
    ```
-3. La textura estará disponible en todas las escenas usando `'mi_clave'`.
+3. Usar la clave desde cualquier escena.
 
-### Añadir un nuevo nivel
-
-1. Crear `src/scenes/NuevoNivelScene.js` (extender `Phaser.Scene`).
-2. Importarlo en `src/main.js` y agregarlo al array `scene[]`.
-3. En `MainMenuScene.js`, agregar un botón con `createMenuButton()` que llame a `this.startLevel('NuevoNivelScene')`.
+### Añadir un nuevo distrito
+1. Crear `src/scenes/NuevoDistritoScene.js` (extender `Phaser.Scene`).
+2. Importarlo en `src/main.js` y añadirlo al array `scene[]`.
+3. En `MainMenuScene.js`, agregar tarjeta de selección con `createLevelButton()`.
 
 ## Licencia
 

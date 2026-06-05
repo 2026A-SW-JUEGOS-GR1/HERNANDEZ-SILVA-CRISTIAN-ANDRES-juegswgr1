@@ -272,22 +272,31 @@ body {
     font-size: 0.75rem;
 }
 
-.add-score-btn .btn-icon {
-    background: rgba(57, 255, 20, 0.2);
-    color: var(--neon-green);
+.add-tohol-btn .btn-icon {
+    background: rgba(245, 208, 97, 0.2);
+    color: #f5d061;
 }
-.add-score-btn:hover {
-    border-color: var(--neon-green);
-    box-shadow: 0 0 10px var(--neon-green-glow);
+.add-tohol-btn:hover {
+    border-color: #f5d061;
+    box-shadow: 0 0 10px rgba(245, 208, 97, 0.5);
 }
 
-.lose-life-btn .btn-icon {
+.lose-energy-btn .btn-icon {
     background: rgba(255, 0, 127, 0.2);
     color: var(--neon-pink);
 }
-.lose-life-btn:hover {
+.lose-energy-btn:hover {
     border-color: var(--neon-pink);
     box-shadow: 0 0 10px var(--neon-pink-glow);
+}
+
+.add-rep-btn .btn-icon {
+    background: rgba(57, 255, 20, 0.2);
+    color: var(--neon-green);
+}
+.add-rep-btn:hover {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 10px var(--neon-green-glow);
 }
 
 .add-timer-btn .btn-icon {

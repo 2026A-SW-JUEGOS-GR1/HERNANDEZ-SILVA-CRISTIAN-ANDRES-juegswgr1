@@ -24,7 +24,7 @@ export class PauseScene extends Phaser.Scene {
     this.add.rectangle(width / 2, height / 2, width, height, 0x000000, 0.6);
 
     this.add
-      .text(width / 2, height / 2 - 20, 'PAUSED', {
+      .text(width / 2, height / 2 - 20, 'PAUSADO', {
         fontSize: '32px',
         color: '#ff2f66',
         fontStyle: 'bold',
@@ -32,7 +32,7 @@ export class PauseScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.add
-      .text(width / 2, height / 2 + 20, 'Press ESC to resume', {
+      .text(width / 2, height / 2 + 20, 'Presiona ESC para continuar', {
         fontSize: '14px',
         color: '#ffffff',
       })
