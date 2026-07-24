@@ -25,6 +25,7 @@ export default class Level2Scene extends Phaser.Scene {
         this.jumpsCount = 0;
         this.isDashing = false;
         this.dashCooldown = false;
+        this.hasDashedInAir = false;
         this.speedMultiplier = 1.0;
 
         this.coyoteTimeDuration = 100;
@@ -198,13 +199,21 @@ export default class Level2Scene extends Phaser.Scene {
         }
 
         if (!isTouchingGround) {
-            if (this.jumpsCount === 2) this.player.anims.play('p2_doublejump', true);
-            else this.player.anims.play('p2_jump', true);
+            if (this.jumpsCount === 2) {
+                this.player.anims.play('p2_doublejump', true);
+            } else if (this.player.body.velocity.y < 0) {
+                this.player.anims.play('p2_jump', true);
+            } else {
+                this.player.anims.play('p2_jump', true);
+                this.player.anims.stop();
+                this.player.setFrame(3);
+            }
         }
 
         // Coyote + Buffer
         if (isTouchingGround) {
             this.jumpsCount = 0;
+            this.hasDashedInAir = false;
             this.lastTimeOnGround = this.time.now;
         }
 
@@ -230,8 +239,8 @@ export default class Level2Scene extends Phaser.Scene {
             this.doubleJumpRingEmitter.emitParticleAt(this.player.x, this.player.y + 16, 4);
         }
 
-        // Dash
-        if (Phaser.Input.Keyboard.JustDown(this.shiftKey) && !this.dashCooldown) {
+        // Dash (sólo 1 en el aire por cada aterrizaje)
+        if (Phaser.Input.Keyboard.JustDown(this.shiftKey) && !this.dashCooldown && (isTouchingGround || !this.hasDashedInAir)) {
             this.executeDash();
         }
 
@@ -408,6 +417,11 @@ export default class Level2Scene extends Phaser.Scene {
         this.dashCooldown = true;
         this.player.body.setAllowGravity(false);
 
+        const isTouchingGround = this.player.body.blocked.down || this.player.body.touching.down;
+        if (!isTouchingGround) {
+            this.hasDashedInAir = true;
+        }
+
         const direction = this.player.flipX ? -1 : 1;
         const dashSpeed = 500;
 
@@ -476,7 +490,10 @@ export default class Level2Scene extends Phaser.Scene {
     }
 
     tryToSocialize() {
-        if (this.time.now - this.lastSocializeTime < this.socializeCooldown) return;
+        if (this.time.now - this.lastSocializeTime < this.socializeCooldown) {
+            this.playSFX('sfx_damage');
+            return;
+        }
 
         let nearest = null;
         let bestDist = 60;
@@ -488,6 +505,7 @@ export default class Level2Scene extends Phaser.Scene {
 
         // Cooldown por anfitrión
         if (this.time.now - nearest.lastInteracted < 5000) {
+            this.playSFX('sfx_damage');
             this.flashPrompt('Este anfitrión ya te conoce', '#9ca3af');
             return;
         }
@@ -542,6 +560,7 @@ export default class Level2Scene extends Phaser.Scene {
         if (hud.energy > 0) {
             this.player.setVelocity(0, 0);
             this.player.setPosition(100, 300);
+            this.hasDashedInAir = false;
             this.tweens.add({
                 targets: this.player,
                 alpha: 0.2,
@@ -553,6 +572,7 @@ export default class Level2Scene extends Phaser.Scene {
     }
 
     handleMainEvent() {
+        this.playSFX('sfx_coin');
         this.game.events.emit('goal-reached', {
             type: 'social',
             minReputation: 50
@@ -663,6 +683,7 @@ export default class Level2Scene extends Phaser.Scene {
         this.qKey.on('down', () => {
             if (this.isPaused) {
                 this.resumeGame();
+                this.playSFX('sfx_damage');
                 this.cameras.main.fadeOut(400, 11, 15, 25);
                 this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
                     this.scene.stop('UIScene');
@@ -676,6 +697,7 @@ export default class Level2Scene extends Phaser.Scene {
         this.isPaused = true;
         this.physics.pause();
         this.tweens.pauseAll();
+        this.playSFX('sfx_jump');
 
         // Pausar música de fondo
         if (this._bgMusicInstance && this._bgMusicInstance.isPlaying) {
@@ -722,6 +744,7 @@ export default class Level2Scene extends Phaser.Scene {
         this.isPaused = false;
         this.physics.resume();
         this.tweens.resumeAll();
+        this.playSFX('sfx_jump');
 
         // Reanudar música de fondo
         if (this._bgMusicInstance && this._bgMusicInstance.isPaused) {
