@@ -1,0 +1,73 @@
+# Model.mtl - Auto-generated for Babylon.js
+# Materials for mp_ftl_sabre_team_7 character
+
+newmtl mp_ftl_sabre_team_7_shirts
+Kd 0.8 0.8 0.8
+Ks 0.3 0.3 0.3
+Ns 50.0
+d 1.0
+map_Kd Texture/mp_ftl_sabre_team_7_shirts_col.tga
+map_Ks Texture/mp_ftl_sabre_team_7_shirts_spec.tga
+map_bump Texture/mp_ftl_sabre_team_7_shirts_nml.tga
+
+newmtl mp_ftl_sabre_team_7_mask
+Kd 0.8 0.8 0.8
+Ks 0.4 0.4 0.4
+Ns 80.0
+d 1.0
+map_Kd Texture/mp_ftl_sabre_team_7_mask_col.tga
+map_Ks Texture/mp_ftl_sabre_team_7_mask_spec.tga
+map_bump Texture/mp_ftl_sabre_team_7_mask_nml.tga
+
+newmtl mp_ftl_sabre_team_7_pants
+Kd 0.8 0.8 0.8
+Ks 0.2 0.2 0.2
+Ns 30.0
+d 1.0
+map_Kd Texture/mp_ftl_sabre_team_7_pants_col.tga
+map_Ks Texture/mp_ftl_sabre_team_7_pants_spec.tga
+map_bump Texture/mp_ftl_sabre_team_7_pants_nml.tga
+
+newmtl mp_ftl_3_1_feet
+Kd 0.8 0.8 0.8
+Ks 0.3 0.3 0.3
+Ns 50.0
+d 1.0
+map_Kd Texture/mp_ftl_3_1_feet_col.tga
+map_Ks Texture/mp_ftl_3_1_feet_spec.tga
+map_bump Texture/mp_ftl_3_1_feet_nml.tga
+
+newmtl mp_ftl_3_3_loadout
+Kd 0.8 0.8 0.8
+Ks 0.4 0.4 0.4
+Ns 60.0
+d 1.0
+map_Kd Texture/mp_ftl_3_3_loadout_col.tga
+map_Ks Texture/mp_ftl_3_3_loadout_spec.tga
+
+newmtl mp_ftl_sabre_team_7_backpack
+Kd 0.8 0.8 0.8
+Ks 0.3 0.3 0.3
+Ns 50.0
+d 1.0
+map_Kd Texture/mp_ftl_sabre_team_7_backpack_col.tga
+map_Ks Texture/mp_ftl_sabre_team_7_backpack_spec.tga
+map_bump Texture/mp_ftl_sabre_team_7_backpack_nml.tga
+
+newmtl mp_ftl_sabre_team_7_hands
+Kd 0.8 0.8 0.8
+Ks 0.2 0.2 0.2
+Ns 30.0
+d 1.0
+map_Kd Texture/mp_ftl_sabre_team_7_hands_col.tga
+map_Ks Texture/mp_ftl_sabre_team_7_hands_spec.tga
+map_bump Texture/mp_ftl_sabre_team_7_hands_nml.tga
+
+newmtl mp_ftl_sabre_team_7_cables
+Kd 0.6 0.6 0.6
+Ks 0.5 0.5 0.5
+Ns 100.0
+d 1.0
+map_Kd Texture/mp_ftl_sabre_team_7_cables_col.tga
+map_Ks Texture/mp_ftl_sabre_team_7_cables_spec.tga
+map_bump Texture/mp_ftl_sabre_team_7_cables_nml.tga

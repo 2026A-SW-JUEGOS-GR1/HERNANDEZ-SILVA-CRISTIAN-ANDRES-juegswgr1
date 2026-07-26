@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+    <title>3D House Viewer</title>
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <script src="assets/js/vendor/jquery.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <canvas id="renderCanvas"></canvas>
+
+    <div class="select-floor-container">
+      <div class="normal-view"><span>Normal View</span></div>
+      <div class="select-floor" floor="3"><span>Floor 2</span></div>
+      <div class="select-floor" floor="4"><span>Floor 2 Base</span></div>
+      <div class="select-floor" floor="1"><span>Floor 1</span></div>
+      <div class="select-floor" floor="2"><span>Floor 1 Base</span></div>
+      <div class="select-floor" floor="0"><span>Whole House</span></div>
+    </div>
+
+    <div class="mode-container">
+      <div class="mode-btn active" id="modeOrbit">
+        <span>Vista General</span>
+      </div>
+      <div class="mode-btn" id="modeWalk"><span>Modo Libre</span></div>
+    </div>
+    <!-- 
+    <div class="model-loader-container">
+        <div class="model-loader-btn" id="loadCharacterBtn"><span>Load Character</span></div>
+        <div class="model-loader-btn" id="loadModelBtn"><span>+ Load Model</span></div>
+        <input type="file" id="modelFileInput" accept=".glb,.gltf,.babylon,.obj,.stl,.dae,.fbx" style="display:none">
+    </div> -->
+
+    <div class="crosshair" id="crosshair">+</div>
+
+    <div class="walk-instructions" id="walkInstructions">
+      <p>WASD - Move | Drag Mouse - Rotate Camera | Scroll - Zoom</p>
+    </div>
+
+    <div class="model-placement-hint" id="modelPlacementHint">
+      <p>
+        Click to place model | Scroll to scale | R to rotate | Right-click to
+        cancel
+      </p>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>
